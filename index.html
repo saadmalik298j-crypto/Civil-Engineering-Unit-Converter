@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Civil Engineering Unit Converter | Online Structural, Geotech & Hydraulic Calculator</title>
+  <meta name="description" content="Free professional civil engineering unit converter. Accurately convert pressure, stress (MPa to psi), force (kN to kip), moment, soil unit weight, concrete density, and hydraulic discharge with step-by-step formulas.">
+  <meta name="keywords" content="civil engineering unit converter, MPa to psi, kN to kip, stress converter, concrete density converter, soil mechanics units, hydraulic discharge cfs to cumec, civil engineering calculator">
+  <meta name="author" content="CivilCalc Pro Engineering Suite">
+  <meta name="robots" content="index, follow">
+
+  
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Civil Engineering Unit Converter | Structural, Geotech & Hydraulic Units">
+  <meta property="og:description" content="Instant, high-precision unit converter specifically tailored for civil, structural, geotechnical, and highway engineers. Includes complete reference tables and conversion formulas.">
+  <meta property="og:url" content="https://civilcalcpro.org/">
+  <meta property="og:site_name" content="Civil Engineering Toolset">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Civil Engineering Unit Converter">
+  <meta name="twitter:description" content="Convert MPa to psi, kN to kips, soil unit weights, hydraulic flow rates, and moment values with instant precision.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://civilcalcpro.org/#webapp",
+        "name": "Civil Engineering Unit Converter",
+        "url": "https://civilcalcpro.org/",
+        "applicationCategory": "EngineeringApplication",
+        "operatingSystem": "All",
+        "description": "Comprehensive engineering unit converter for civil, structural, geotechnical, and hydraulic calculations including stress, force, moments, density, and discharge.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://civilcalcpro.org/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do you convert MPa to psi for concrete compressive strength?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "1 Megapascal (MPa) equals precisely 145.0377 psi (pounds per square inch). To convert MPa to psi, multiply the MPa figure by 145.038. For example, standard C30/37 concrete with 30 MPa characteristic cylinder strength corresponds to 30 × 145.038 = 4,351 psi."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How many kN are in one kip in structural load analysis?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "1 kip (1,000 pounds-force) is equal to 4.448222 kilonewtons (kN). Conversely, 1 kN equals approximately 0.224809 kips. In structural software cross-checks (e.g., SAP2000, ETABS, or STAAD.Pro), multiplying kips by 4.4482 gives exact kilonewtons."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the conversion factor between kN/m³ and pcf for soil unit weight?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "1 kN/m³ (kilonewton per cubic meter) equals 6.36588 pounds per cubic foot (pcf / lb/ft³). Standard compacted clay or dense sand with a unit weight of 19 kN/m³ equates to roughly 120.95 pcf."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you convert hydraulic flow rate from cumecs (m³/s) to cfs?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "1 cumec (cubic meter per second, m³/s) equals 35.3147 cfs (cubic feet per second). To convert cumecs to cfs, multiply the flow by 35.315."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is unit consistency critical in finite element structural modeling?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Finite element software algorithms operate without intrinsic units. If material modulus (E) is entered in N/mm² (MPa), all forces must be in Newtons and geometry in millimeters; otherwise, displacements and internal stress calculations will be off by orders of magnitude (e.g. 10³ or 10⁶ errors)."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* CSS Reset & Variables */
+    :root {
+      --bg-primary: #0a0f1d;
+      --bg-secondary: #111827;
+      --bg-card: rgba(17, 24, 39, 0.75);
+      --bg-card-hover: rgba(30, 41, 59, 0.85);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-focus: #0ea5e9;
+      --accent-cyan: #06b6d4;
+      --accent-blue: #3b82f6;
+      --accent-amber: #f59e0b;
+      --accent-emerald: #10b981;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --shadow-glow: 0 0 35px -5px rgba(14, 165, 233, 0.25);
+      --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.65;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 65%, rgba(59, 130, 246, 0.06) 0%, transparent 45%),
+        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Header & Navigation */
+    header {
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(10, 15, 29, 0.85);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 72px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35);
+    }
+
+    .brand-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: #ffffff;
+    }
+
+    .brand-text {
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 40%, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(14, 165, 233, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: var(--transition-smooth);
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .btn-header-cta {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.45rem 0.95rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-header-cta:hover {
+      background: rgba(14, 165, 233, 0.15);
+      border-color: rgba(14, 165, 233, 0.4);
+      color: #38bdf8;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 3rem 0 2rem;
+      text-align: center;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(14, 165, 233, 0.1);
+      border: 1px solid rgba(14, 165, 233, 0.25);
+      color: #38bdf8;
+      padding: 0.35rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+
+    .badge-pill-pulse {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent-cyan);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    h1 {
+      font-size: clamp(2.1rem, 4.5vw, 3.4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.6;
+    }
+
+    /* Converter Card Component */
+    .converter-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-glow), 0 20px 45px rgba(0, 0, 0, 0.5);
+      margin-bottom: 3.5rem;
+      position: relative;
+    }
+
+    .converter-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.6), transparent);
+    }
+
+    /* Category Nav Tabs */
+    .category-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      margin-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border-color);
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.1) transparent;
+    }
+
+    .category-tabs::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .category-tabs::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.15);
+      border-radius: 4px;
+    }
+
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 0.6rem 1.1rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition-smooth);
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .tab-btn.active {
+      background: rgba(14, 165, 233, 0.15);
+      color: #38bdf8;
+      border-color: rgba(14, 165, 233, 0.4);
+      box-shadow: 0 2px 10px rgba(14, 165, 233, 0.2);
+    }
+
+    /* Converter Grid */
+    .converter-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1.5rem;
+      align-items: center;
+      margin-bottom: 1.75rem;
+    }
+
+    @media (max-width: 860px) {
+      .converter-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .input-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 1.25rem;
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+
+    .input-box:focus-within {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+    }
+
+    .box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .box-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      font-weight: 700;
+    }
+
+    .unit-select {
+      background: #1e293b;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      outline: none;
+      cursor: pointer;
+      max-width: 220px;
+    }
+
+    .unit-select:focus {
+      border-color: var(--border-focus);
+    }
+
+    .number-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      font-family: var(--font-mono);
+      font-size: 1.85rem;
+      font-weight: 600;
+      color: #ffffff;
+      outline: none;
+    }
+
+    .number-input::placeholder {
+      color: #4b5563;
+    }
+
+    .result-display {
+      width: 100%;
+      font-family: var(--font-mono);
+      font-size: 1.85rem;
+      font-weight: 600;
+      color: #38bdf8;
+      overflow-x: auto;
+      white-space: nowrap;
+      user-select: all;
+    }
+
+    /* Swap Button */
+    .swap-btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swap-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #1e293b;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #38bdf8;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-smooth);
+    }
+
+    .swap-btn:hover {
+      background: rgba(14, 165, 233, 0.2);
+      border-color: #38bdf8;
+      transform: rotate(180deg);
+    }
+
+    .swap-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Converter Meta Bar */
+    .converter-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.88rem;
+    }
+
+    .formula-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .formula-badge strong {
+      color: var(--accent-amber);
+    }
+
+    .controls-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .precision-select {
+      background: #1e293b;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 0.3rem 0.5rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .btn-action {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-action:hover {
+      background: rgba(14, 165, 233, 0.2);
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #0f172a;
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 100;
+      animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Quick Preset Chips */
+    .quick-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+      align-items: center;
+    }
+
+    .preset-title {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-right: 0.25rem;
+    }
+
+    .preset-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .preset-chip:hover {
+      background: rgba(14, 165, 233, 0.15);
+      border-color: rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+    }
+
+    /* Content & Article Section (SEO 1000+ words) */
+    .content-article {
+      max-width: 900px;
+      margin: 0 auto 4rem;
+    }
+
+    .content-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(12px);
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    h2::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1.4rem;
+      background: #0ea5e9;
+      border-radius: 2px;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin: 1.75rem 0 0.75rem;
+    }
+
+    p {
+      color: #cbd5e1;
+      font-size: 1.02rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.75;
+    }
+
+    ul, ol {
+      color: #cbd5e1;
+      padding-left: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+      line-height: 1.65;
+    }
+
+    /* Callout Box */
+    .callout-box {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.08) 0%, rgba(99, 102, 241, 0.08) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-left: 4px solid #38bdf8;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.75rem 0;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      color: #38bdf8;
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* SEO Anchor Link Special Style */
+    .highlight-link {
+      color: #38bdf8;
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-color: rgba(56, 189, 248, 0.5);
+      text-underline-offset: 3px;
+      transition: var(--transition-smooth);
+    }
+
+    .highlight-link:hover {
+      color: #7dd3fc;
+      text-decoration-color: #38bdf8;
+    }
+
+    .partner-banner {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin: 2rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    @media (max-width: 700px) {
+      .partner-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .partner-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-amber);
+      background: rgba(245, 158, 11, 0.15);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 0.4rem;
+    }
+
+    .partner-btn {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #ffffff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.92rem;
+      white-space: nowrap;
+      transition: var(--transition-smooth);
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    }
+
+    .partner-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+    }
+
+    /* Comparison & Reference Tables */
+    .table-container {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.92rem;
+    }
+
+    th {
+      background: #1e293b;
+      color: #94a3b8;
+      font-weight: 600;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    code {
+      font-family: var(--font-mono);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.85em;
+      color: #38bdf8;
+    }
+
+    /* FAQ Section Accordion */
+    .faq-item {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      background: rgba(17, 24, 39, 0.5);
+      transition: var(--transition-smooth);
+    }
+
+    .faq-question {
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      color: #f1f5f9;
+      font-size: 1.05rem;
+      user-select: none;
+    }
+
+    .faq-question:hover {
+      color: #38bdf8;
+    }
+
+    .faq-chevron {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.25s ease;
+      color: var(--text-dim);
+    }
+
+    .faq-item.open .faq-chevron {
+      transform: rotate(180deg);
+      color: #38bdf8;
+    }
+
+    .faq-answer {
+      padding: 0 1.5rem 1.25rem;
+      color: #94a3b8;
+      display: none;
+      line-height: 1.7;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      background: #0b1120;
+      padding: 3.5rem 0 2rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer-title {
+      font-weight: 700;
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: var(--transition-smooth);
+    }
+
+    .footer-links a:hover {
+      color: #38bdf8;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="container navbar">
+      <a href="#" class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/>
+          </svg>
+        </div>
+        <div>
+          <span class="brand-text">CivilCalc<span style="color:#38bdf8;">Pro</span></span>
+        </div>
+        <span class="brand-badge">CE Suite</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#converter">Converter</a></li>
+          <li><a href="#structural">Structural</a></li>
+          <li><a href="#geotechnical">Geotechnical</a></li>
+          <li><a href="#pavement">Pavements</a></li>
+          <li><a href="#hydraulics">Hydraulics</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <a href="#converter" class="btn-header-cta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        Quick Convert
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="badge-pill">
+        <span class="badge-pill-pulse"></span>
+        Professional Engineering Suite &bull; High-Precision Solver
+      </div>
+      <h1>Civil Engineering <span>Unit Converter</span></h1>
+      <p class="hero-subtitle">
+        Execute error-free cross-unit conversions between SI Metric and US Customary systems. Tailored for structural finite element analysis, geotechnical soil mechanics, concrete mix design, and hydraulic modeling.
+      </p>
+    </section>
+
+    <!-- Interactive Converter Tool Card -->
+    <section id="converter" class="converter-card" aria-label="Civil Engineering Unit Converter Calculator">
+      <!-- Category Tabs -->
+      <div class="category-tabs" id="categoryTabs" role="tablist">
+        <button class="tab-btn active" data-category="stress" role="tab" aria-selected="true">
+          <span>&sigma;</span> Pressure &amp; Stress
+        </button>
+        <button class="tab-btn" data-category="force" role="tab" aria-selected="false">
+          <span>F</span> Force &amp; Point Load
+        </button>
+        <button class="tab-btn" data-category="distLoad" role="tab" aria-selected="false">
+          <span>q</span> Line / Dist. Load
+        </button>
+        <button class="tab-btn" data-category="moment" role="tab" aria-selected="false">
+          <span>M</span> Moment &amp; Torque
+        </button>
+        <button class="tab-btn" data-category="density" role="tab" aria-selected="false">
+          <span>&gamma;</span> Unit Weight &amp; Density
+        </button>
+        <button class="tab-btn" data-category="flow" role="tab" aria-selected="false">
+          <span>Q</span> Flow Rate / Discharge
+        </button>
+        <button class="tab-btn" data-category="permeability" role="tab" aria-selected="false">
+          <span>k</span> Hydraulic Permeability
+        </button>
+        <button class="tab-btn" data-category="length" role="tab" aria-selected="false">
+          <span>L</span> Length &amp; Deflection
+        </button>
+        <button class="tab-btn" data-category="area" role="tab" aria-selected="false">
+          <span>A</span> Area &amp; Section
+        </button>
+        <button class="tab-btn" data-category="volume" role="tab" aria-selected="false">
+          <span>V</span> Volume &amp; Batching
+        </button>
+      </div>
+
+      <!-- Main Input / Output Grid -->
+      <div class="converter-grid">
+        <!-- Source Input Box -->
+        <div class="input-box">
+          <div class="box-header">
+            <span class="box-label">Input Value &amp; Source Unit</span>
+            <select id="fromUnit" class="unit-select" aria-label="Select source unit"></select>
+          </div>
+          <input type="number" id="sourceValue" class="number-input" value="30" step="any" placeholder="0.00" aria-label="Source value to convert">
+        </div>
+
+        <!-- Center Swap Button -->
+        <div class="swap-btn-container">
+          <button id="swapBtn" class="swap-btn" title="Swap input and output units" aria-label="Swap units">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 16V4M7 4L3 8M7 4L11 8M17 8v12M17 20l4-4M17 20l-4-4"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Target Output Box -->
+        <div class="input-box">
+          <div class="box-header">
+            <span class="box-label">Converted Result &amp; Target Unit</span>
+            <select id="toUnit" class="unit-select" aria-label="Select target unit"></select>
+          </div>
+          <div id="resultDisplay" class="result-display" title="Click to copy result">4,351.13</div>
+        </div>
+      </div>
+
+      <!-- Converter Footer Info & Precision -->
+      <div class="converter-meta-bar">
+        <div class="formula-badge">
+          <span>Formula:</span>
+          <span id="formulaText">1 MPa = 145.038 psi</span>
+        </div>
+
+        <div class="controls-group">
+          <label for="precisionSelect" style="color: var(--text-dim); font-size: 0.82rem;">Decimals:</label>
+          <select id="precisionSelect" class="precision-select" aria-label="Decimal places precision">
+            <option value="2">2 decimals</option>
+            <option value="4" selected>4 decimals</option>
+            <option value="6">6 decimals</option>
+            <option value="8">8 decimals</option>
+            <option value="sci">Scientific</option>
+          </select>
+
+          <button id="copyBtn" class="btn-action">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            Copy
+          </button>
+        </div>
+      </div>
+
+      <!-- Common Civil Engineering Quick Presets -->
+      <div class="quick-presets">
+        <span class="preset-title">Civil Presets:</span>
+        <button class="preset-chip" data-cat="stress" data-from="MPa" data-to="psi" data-val="25">C25 Concrete (25 MPa &rarr; psi)</button>
+        <button class="preset-chip" data-cat="stress" data-from="MPa" data-to="ksi" data-val="420">Grade 60 Steel (420 MPa &rarr; ksi)</button>
+        <button class="preset-chip" data-cat="force" data-from="kip" data-to="kN" data-val="50">50 kips &rarr; kN</button>
+        <button class="preset-chip" data-cat="density" data-from="kN/m3" data-to="pcf" data-val="19">Soil Unit Wt (19 kN/m³ &rarr; pcf)</button>
+        <button class="preset-chip" data-cat="flow" data-from="m3/s" data-to="cfs" data-val="10">Culvert Flow (10 cumec &rarr; cfs)</button>
+        <button class="preset-chip" data-cat="moment" data-from="kN*m" data-to="kip*ft" data-val="150">Bending Moment (150 kN·m &rarr; kip·ft)</button>
+      </div>
+    </section>
+
+    <!-- Copy Confirmation Toast -->
+    <div id="toast" class="toast">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      Result copied to clipboard!
+    </div>
+
+    <!-- SEMANTIC ARTICLE CONTENT (1,000+ Words SEO-Optimized) -->
+    <article class="content-article">
+      
+      <!-- Section 1: Introduction to Civil Engineering Unit Systems -->
+      <section class="content-card" id="systems-overview">
+        <h2>Engineering Unit Systems: SI Metric vs. US Customary</h2>
+        <p>
+          In civil and structural engineering, precision is not merely a matter of academic rigor; it is the ultimate safeguard for structural integrity, constructability, and public safety. Infrastructure projects frequently span international borders, involving multijurisdictional consultancies, international contractors, and disparate material specifications. Consequently, civil engineers routinely transition between the <strong>International System of Units (SI)</strong> and <strong>US Customary Units (Imperial / English System)</strong>.
+        </p>
+        <p>
+          A single mathematical error or misinterpretation of dimensional factors can cause catastrophically flawed structural deflections, undersized hydraulic conduits, or inaccurate foundation settlements. For example, during finite element modeling (FEM) in software such as ETABS, SAP2000, ABAQUS, and Plaxis, units are not automatically standardized unless configured by the user. If an elastic modulus is input in $\text{N/mm}^2$ (MPa) while geometry is declared in meters, resultant stresses will deviate by a factor of $10^6$.
+        </p>
+
+        <div class="callout-box">
+          <div class="callout-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            Golden Rule of Dimensional Homogeneity
+          </div>
+          <p style="margin-bottom: 0;">
+            Always confirm that every term in your structural equations adheres to the base unit set: $\text{Force [N]} = \text{Mass [kg]} \times \text{Acceleration [m/s}^2\text{]}$, or in imperial frameworks, $1\text{ slug} = 32.174\text{ lbm}$, with $1\text{ lbf}$ accelerating $1\text{ slug}$ at $1\text{ ft/s}^2$. Never mix kips and pounds or meters and millimeters without direct intermediate scalars.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 2: Structural Engineering Units -->
+      <section class="content-card" id="structural">
+        <h2>Structural Engineering Conversions: Stress, Force, and Moments</h2>
+        <p>
+          Structural engineering designs require constant manipulation of three core mechanical quantities: axial force/shear, flexural moments, and material stress. In Eurocode (EN 1992 / EN 1993), Canadian standards (CSA A23.3), and Indian standards (IS 456), stresses are expressed in <strong>Megapascals ($\text{MPa}$)</strong> or <strong>$\text{N/mm}^2$</strong>, which are numerically identical ($1\text{ MPa} = 1\text{ N/mm}^2$). Conversely, the American Concrete Institute (ACI 318) and AISC Steel Construction Manual employ <strong>pounds per square inch ($\text{psi}$)</strong> and <strong>kips per square inch ($\text{ksi}$)</strong>.
+        </p>
+
+        <h3>1. Concrete Compressive Strength ($\text{f}'_c$ vs. $f_{ck}$)</h3>
+        <p>
+          American practice measures 28-day cylinder compressive strength as $\text{f}'_c$ in psi, while European standards state characteristic strength $f_{ck}$ in MPa. A standard $4,000\text{ psi}$ mix is converted to:
+        </p>
+        <p style="text-align: center; font-family: var(--font-mono); color: #38bdf8; background: rgba(0,0,0,0.25); padding: 0.75rem; border-radius: 8px;">
+          4,000 \text{ psi} \times \frac{1\text{ MPa}}{145.0377\text{ psi}} = 27.58\text{ MPa} \approx \text{Class C25/30}
+        </p>
+        <p>
+          Similarly, high-strength concrete of $60\text{ MPa}$ yields:
+          $$60 \times 145.0377 = 8,702.26\text{ psi} \approx 8.7\text{ ksi}$$
+        </p>
+
+        <h3>2. Bending Moment &amp; Flexural Capacity Conversions</h3>
+        <p>
+          Design bending moments in beam and slab sections are computed in <strong>kilonewton-meters ($\text{kN}\cdot\text{m}$)</strong> in metric jurisdictions and <strong>kip-feet ($\text{kip}\cdot\text{ft}$)</strong> or <strong>kip-inches ($\text{kip}\cdot\text{in}$)</strong> in US practice.
+        </p>
+        <ul>
+          <li><strong>$1\text{ kN}\cdot\text{m} = 0.737562\text{ kip}\cdot\text{ft} = 8.85075\text{ kip}\cdot\text{in}$</strong></li>
+          <li><strong>$1\text{ kip}\cdot\text{ft} = 1.355818\text{ kN}\cdot\text{m}$</strong></li>
+        </ul>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Quantity</th>
+                <th>SI Metric Unit</th>
+                <th>US Customary Unit</th>
+                <th>Exact Multiply Factor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Point Load / Force</td>
+                <td>$\text{kN}$</td>
+                <td>$\text{kip}$</td>
+                <td>$1\text{ kN} = 0.224809\text{ kip}$</td>
+              </tr>
+              <tr>
+                <td>Line / Dead Load</td>
+                <td>$\text{kN/m}$</td>
+                <td>$\text{plf}$ ($\text{lb/ft}$) or $\text{klf}$ ($\text{kip/ft}$)</td>
+                <td>$1\text{ kN/m} = 68.5218\text{ plf} = 0.06852\text{ klf}$</td>
+              </tr>
+              <tr>
+                <td>Area / Floor Load</td>
+                <td>$\text{kN/m}^2$ ($\text{kPa}$)</td>
+                <td>$\text{psf}$ ($\text{lb/ft}^2$)</td>
+                <td>$1\text{ kPa} = 20.8854\text{ psf}$</td>
+              </tr>
+              <tr>
+                <td>Modulus of Elasticity ($E_s$)</td>
+                <td>$\text{GPa}$ ($\text{kN/mm}^2$)</td>
+                <td>$\text{ksi}$</td>
+                <td>$200\text{ GPa} = 29,007.5\text{ ksi}$</td>
+              </tr>
+              <tr>
+                <td>Second Moment of Area ($I$)</td>
+                <td>$\text{cm}^4$ or $\text{mm}^4 \times 10^6$</td>
+                <td>$\text{in}^4$</td>
+                <td>$1\text{ in}^4 = 41.6231\text{ cm}^4 = 416,231\text{ mm}^4$</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 3: Geotechnical Engineering & Soil Mechanics -->
+      <section class="content-card" id="geotechnical">
+        <h2>Geotechnical Engineering: Unit Weight, Cohesion &amp; Bearing Capacity</h2>
+        <p>
+          Soil mechanics involves multiphase porous media calculations combining solids, pore water, and void air. Soil unit weight ($\gamma$), effective overburden stress ($\sigma'$), cohesion ($c$), and allowable bearing capacity ($q_a$) must be accurately modeled to prevent foundation settlement and slope failure.
+        </p>
+
+        <h3>1. Soil Unit Weight ($\gamma$) and Overburden Pressure</h3>
+        <p>
+          Geotechnical site investigation reports in the United States list unit weights in <strong>pounds per cubic foot ($\text{pcf}$)</strong>, whereas Eurocode 7 and international geotechnical standards specify <strong>kilonewtons per cubic meter ($\text{kN/m}^3$)</strong>.
+        </p>
+        <p>
+          The density of pure liquid water at $4^\circ\text{C}$ serves as the primary benchmark:
+          $$\gamma_w = 9.807\text{ kN/m}^3 = 62.428\text{ pcf}$$
+          Standard compacted sands range between $17.5\text{ kN/m}^3$ ($111.4\text{ pcf}$) to $20.5\text{ kN/m}^3$ ($130.5\text{ pcf}$). Saturated heavy clay can reach $21.5\text{ kN/m}^3$ ($136.9\text{ pcf}$).
+        </p>
+
+        <h3>2. Bearing Capacity &amp; Consolidation Stress</h3>
+        <p>
+          Allowable soil bearing capacities for shallow spread footings are commonly designated in <strong>$\text{ksf}$ (kips per square foot)</strong> or <strong>$\text{tsf}$ (tons per square foot)</strong> in American reports, and in <strong>$\text{kPa}$ ($\text{kN/m}^2$)</strong> in metric projects:
+        </p>
+        <ul>
+          <li><strong>$1\text{ tsf} = 2,000\text{ psf} = 2\text{ ksf} = 95.7605\text{ kPa}$</strong></li>
+          <li><strong>$1\text{ ksf} = 47.8803\text{ kPa}$</strong></li>
+          <li><strong>$1\text{ kgf/cm}^2 \approx 0.980665\text{ bar} = 98.0665\text{ kPa} \approx 1\text{ tsf}$</strong> (frequent legacy conversion)</li>
+        </ul>
+      </section>
+
+      <!-- Section 4: Pavement Design & Bituminous Materials Testing -->
+      <section class="content-card" id="pavement">
+        <h2>Pavement Engineering &amp; Bituminous Materials Specifications</h2>
+        <p>
+          Highway and airport pavement engineering demands precise integration between geotechnical subgrade ratings, aggregate base courses, and bituminous asphalt concrete surfacing. Pavement structural numbers (AASHTO Guide for Design of Pavement Structures) rely on resilient modulus ($M_R$) inputs in psi or MPa, while tack coats, prime coats, and binder distributions are quantified in volume or mass per unit area.
+        </p>
+
+        <p>
+          During hot mix asphalt (HMA) and Superpave mix batching, civil engineers must convert asphalt binder volume-to-weight fractions based on temperature-corrected specific gravities ($\text{SG}$). Accurate bitumen content calculations directly govern pavement durability, rutting resistance, fatigue cracking longevity, and air void percentages ($V_a$, $VMA$, $VFA$).
+        </p>
+
+        <!-- Partner Banner / Contextual Anchor Link -->
+        <div class="partner-banner">
+          <div>
+            <span class="partner-tag">Recommended Engineering Tool</span>
+            <h3 style="margin: 0.25rem 0 0.5rem; font-size: 1.15rem; color: #ffffff;">Specialized Asphalt &amp; Pavement Engineering Calculations</h3>
+            <p style="margin: 0; font-size: 0.92rem; color: #cbd5e1;">
+              For dedicated binder batching, asphalt spray rates, viscosity grade adjustments, and mix-design volumetric calculations, explore the specialized <a href="https://bitumencalcpro.com/" target="_blank" rel="noopener" class="highlight-link">bitumen calculator for all profesionals</a> designed specifically for highway engineers, paving contractors, and asphalt QA/QC laboratories.
+            </p>
+          </div>
+          <div>
+            <a href="https://bitumencalcpro.com/" target="_blank" rel="noopener" class="partner-btn">
+              Visit BitumenCalc &rarr;
+            </a>
+          </div>
+        </div>
+
+        <h3>Key Pavement &amp; Asphalt Conversion Factors</h3>
+        <ul>
+          <li><strong>Application / Spray Rate:</strong> $1\text{ L/m}^2 = 0.221\text{ gal/yd}^2$ (crucial for tack coat and surface seal calibrations).</li>
+          <li><strong>Asphalt Compacted Density:</strong> Typically $2,300\text{ to }2,450\text{ kg/m}^3 \approx 143.6\text{ to }153.0\text{ lb/ft}^3$ ($1.94\text{ to }2.06\text{ tons/yd}^3$).</li>
+          <li><strong>Pavement Thickness:</strong> $1\text{ inch} = 25.4\text{ mm}$ (e.g., a $4\text{ in}$ HMA lift equals $101.6\text{ mm}$, commonly specified as $100\text{ mm}$ in metric jurisdictions).</li>
+        </ul>
+      </section>
+
+      <!-- Section 5: Water Resources & Hydraulic Engineering -->
+      <section class="content-card" id="hydraulics">
+        <h2>Water Resources, Open Channel Hydraulics &amp; Soil Permeability</h2>
+        <p>
+          Hydraulic engineering governs stormwater management, culvert sizing, dam spillway hydraulics, and water distribution networks. The primary parameter is volumetric discharge rate ($Q$).
+        </p>
+
+        <h3>1. Hydraulic Discharge: Cumecs ($\text{m}^3/\text{s}$) vs. Cfs ($\text{ft}^3/\text{s}$)</h3>
+        <p>
+          In US hydrology (HEC-HMS, HEC-RAS, SWMM), flow discharge is overwhelmingly expressed in <strong>cubic feet per second (cfs)</strong>. Internationally, civil engineers compute peak runoff via the Rational Method ($Q = C I A$) or hydrographs in <strong>cubic meters per second (cumecs, $\text{m}^3/\text{s}$)</strong> or <strong>liters per second ($\text{L/s}$)</strong>:
+        </p>
+        <p style="text-align: center; font-family: var(--font-mono); color: #38bdf8; background: rgba(0,0,0,0.25); padding: 0.75rem; border-radius: 8px;">
+          1\text{ m}^3/\text{s} = 35.31467\text{ cfs} = 15,850.32\text{ US gpm} = 86.4\text{ megaliters/day (MLD)}
+        </p>
+
+        <h3>2. Soil Hydraulic Conductivity / Permeability ($k$)</h3>
+        <p>
+          Seepage through earth dams, retention basin infiltration, and aquifer dewatering flow rates rely on Darcy’s law: $Q = k \cdot i \cdot A$. The hydraulic conductivity $k$ is represented in scientific SI notation as <strong>$\text{m/s}$</strong> or <strong>$\text{cm/s}$</strong>, and in US agricultural / drainage engineering as <strong>$\text{ft/day}$</strong> or <strong>$\text{in/hr}$</strong>:
+        </p>
+        <ul>
+          <li><strong>$1\text{ cm/s} = 2,834.65\text{ ft/day} = 10^{-2}\text{ m/s}$</strong> (characteristic of clean, coarse gravel)</li>
+          <li><strong>$10^{-6}\text{ cm/s} = 0.002835\text{ ft/day}$</strong> (impermeable clay core liners for landfills and tailings dams)</li>
+        </ul>
+      </section>
+
+      <!-- Section 6: Interactive Frequently Asked Questions (FAQ) -->
+      <section class="content-card" id="faq">
+        <h2>Frequently Asked Questions (FAQ)</h2>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How do you convert MPa to psi for concrete compressive strength?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            To convert Megapascals ($\text{MPa}$) to pounds per square inch ($\text{psi}$), multiply the $\text{MPa}$ figure by $145.0377$. For example, a $25\text{ MPa}$ cylinder test corresponds to $25 \times 145.0377 = 3,625.94\text{ psi}$. Conversely, to convert psi to MPa, divide by $145.038$ or multiply by $0.00689476$.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How many kN are in one kip in structural load analysis?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            One kip ($1,000\text{ pounds-force}$) is equal to exactly $4.448222\text{ kilonewtons (kN)}$. If an structural engineering drawing specifies an ultimate point reaction of $45\text{ kips}$, its SI metric equivalent is $45 \times 4.448222 = 200.17\text{ kN}$.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>What is the conversion factor between kN/m³ and pcf for soil unit weight?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            $1\text{ kN/m}^3 = 6.36588\text{ lb/ft}^3\text{ (pcf)}$. To convert soil unit weight from metric to imperial, multiply $\text{kN/m}^3$ by $6.36588$. For example, compacted granular base material at $20\text{ kN/m}^3$ equals $127.32\text{ pcf}$.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How do you convert hydraulic flow rate from cumecs (m³/s) to cfs?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            One cubic meter per second ($\text{cumec}$ or $\text{m}^3/\text{s}$) equals $35.31467\text{ cubic feet per second (cfs)}$. To convert cumecs to cfs, multiply by $35.31467$. A stormwater ditch conveying $2.5\text{ m}^3/\text{s}$ carries approximately $88.29\text{ cfs}$.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Why is unit consistency critical in finite element structural modeling?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="faq-answer">
+            Finite element analysis solvers (FEA) operate purely on mathematical arrays and do not check unit consistency. If young's modulus ($E$) is entered in $\text{N/mm}^2$, dimensions must be in millimeters and forces in Newtons so that stress outputs remain in $\text{N/mm}^2$. Mixing meters and millimeters results in deflection errors of $10^3$ to $10^{12}$, creating undetectable design failures.
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <!-- Modern Engineering Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
+            <div class="brand-icon" style="width: 32px; height: 32px;">
+              <svg viewBox="0 0 24 24" style="width: 18px; height: 18px;">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/>
+              </svg>
+            </div>
+            <span style="font-weight: 800; color: #fff; font-size: 1.15rem;">CivilCalc<span style="color:#38bdf8;">Pro</span></span>
+          </div>
+          <p style="font-size: 0.88rem; color: #94a3b8; max-width: 400px;">
+            The premier online unit conversion tool for civil, structural, geotechnical, and highway engineers. Designed with zero compromises on numeric precision, mathematical accuracy, and user convenience.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Engineering Sectors</h4>
+          <ul class="footer-links">
+            <li><a href="#structural">Structural Analysis</a></li>
+            <li><a href="#geotechnical">Geotechnical Mechanics</a></li>
+            <li><a href="#pavement">Pavement &amp; Asphalt</a></li>
+            <li><a href="#hydraulics">Hydrology &amp; Drainage</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Partner Resources</h4>
+          <ul class="footer-links">
+            <li><a href="https://bitumencalcpro.com/" target="_blank" rel="noopener">Bitumen Calculator</a></li>
+            <li><a href="#converter">Pressure / Stress Tool</a></li>
+            <li><a href="#faq">Engineering FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 CivilCalcPro. Built for civil engineering practitioners and academic researchers worldwide.</div>
+        <div style="display: flex; gap: 1.5rem;">
+          <span>ISO 80000-1 Compliant</span>
+          <span>SI &amp; US Customary</span>
+          <span>ASTM / AASHTO / Eurocode Standards</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Converter Logic & Interactive Script -->
+  <script>
+    // Unit Conversion Database with precise baseline multipliers
+    const unitDatabase = {
+      stress: {
+        base: 'Pa',
+        name: 'Pressure & Stress',
+        units: {
+          'MPa': { name: 'Megapascal (MPa / N/mm²)', toBase: 1e6 },
+          'kPa': { name: 'Kilopascal (kPa / kN/m²)', toBase: 1e3 },
+          'Pa': { name: 'Pascal (Pa / N/m²)', toBase: 1 },
+          'GPa': { name: 'Gigapascal (GPa)', toBase: 1e9 },
+          'psi': { name: 'Pounds per sq inch (psi)', toBase: 6894.757293168 },
+          'ksi': { name: 'Kips per sq inch (ksi)', toBase: 6894757.293168 },
+          'psf': { name: 'Pounds per sq foot (psf)', toBase: 47.8802589803 },
+          'ksf': { name: 'Kips per sq foot (ksf)', toBase: 47880.2589803 },
+          'bar': { name: 'Bar (bar)', toBase: 1e5 },
+          'kgf/cm2': { name: 'Kilogram-force/cm² (kgf/cm²)', toBase: 98066.5 },
+          'tsf': { name: 'Tons (short) per sq ft (tsf)', toBase: 95760.51796 }
+        },
+        defaultFrom: 'MPa',
+        defaultTo: 'psi',
+        defaultVal: 30
+      },
+      force: {
+        base: 'N',
+        name: 'Force & Point Load',
+        units: {
+          'kN': { name: 'Kilonewton (kN)', toBase: 1000 },
+          'N': { name: 'Newton (N)', toBase: 1 },
+          'MN': { name: 'Meganewton (MN)', toBase: 1e6 },
+          'kip': { name: 'Kip (1000 lbf)', toBase: 4448.22161526 },
+          'lbf': { name: 'Pound-force (lbf)', toBase: 4.44822161526 },
+          'tonf_us': { name: 'Ton-force (US Short)', toBase: 8896.44323 },
+          'tonf_m': { name: 'Tonne-force (Metric tf)', toBase: 9806.65 },
+          'kgf': { name: 'Kilogram-force (kgf)', toBase: 9.80665 }
+        },
+        defaultFrom: 'kN',
+        defaultTo: 'kip',
+        defaultVal: 100
+      },
+      distLoad: {
+        base: 'N/m',
+        name: 'Distributed / Line Load',
+        units: {
+          'kN/m': { name: 'Kilonewton per meter (kN/m)', toBase: 1000 },
+          'N/m': { name: 'Newton per meter (N/m)', toBase: 1 },
+          'N/mm': { name: 'Newton per millimeter (N/mm)', toBase: 1000 },
+          'lbf/ft': { name: 'Pounds per foot (plf)', toBase: 14.5939029 },
+          'kip/ft': { name: 'Kips per foot (klf)', toBase: 14593.9029 },
+          'kgf/m': { name: 'Kilogram-force per meter (kgf/m)', toBase: 9.80665 }
+        },
+        defaultFrom: 'kN/m',
+        defaultTo: 'kip/ft',
+        defaultVal: 20
+      },
+      moment: {
+        base: 'N*m',
+        name: 'Bending Moment & Torque',
+        units: {
+          'kN*m': { name: 'Kilonewton-meter (kN·m)', toBase: 1000 },
+          'N*m': { name: 'Newton-meter (N·m)', toBase: 1 },
+          'kN*cm': { name: 'Kilonewton-centimeter (kN·cm)', toBase: 10 },
+          'lbf*ft': { name: 'Pound-force foot (lbf·ft)', toBase: 1.35581794833 },
+          'kip*ft': { name: 'Kip-foot (kip·ft)', toBase: 1355.81794833 },
+          'kip*in': { name: 'Kip-inch (kip·in)', toBase: 112.984829 },
+          'tonf*m': { name: 'Tonne-force meter (tf·m)', toBase: 9806.65 }
+        },
+        defaultFrom: 'kN*m',
+        defaultTo: 'kip*ft',
+        defaultVal: 150
+      },
+      density: {
+        base: 'kg/m3',
+        name: 'Density & Soil Unit Weight',
+        units: {
+          'kN/m3': { name: 'Kilonewton/m³ (kN/m³)', toBase: 101.97162129779 },
+          'kg/m3': { name: 'Kilogram/m³ (kg/m³)', toBase: 1 },
+          'g/cm3': { name: 'Gram/cm³ (g/cm³)', toBase: 1000 },
+          'pcf': { name: 'Pounds per cu ft (lb/ft³ / pcf)', toBase: 16.01846337 },
+          'lb/yd3': { name: 'Pounds per cu yard (lb/yd³)', toBase: 0.5932764 },
+          'ton_m3': { name: 'Tonne per cu meter (t/m³)', toBase: 1000 }
+        },
+        defaultFrom: 'kN/m3',
+        defaultTo: 'pcf',
+        defaultVal: 19
+      },
+      flow: {
+        base: 'm3/s',
+        name: 'Flow Rate / Discharge',
+        units: {
+          'm3/s': { name: 'Cumec (m³/s)', toBase: 1 },
+          'cfs': { name: 'Cfs (ft³/s)', toBase: 0.028316846592 },
+          'L/s': { name: 'Liters per second (L/s)', toBase: 0.001 },
+          'gpm_us': { name: 'Gallons per min (US gpm)', toBase: 0.0000630901964 },
+          'm3/h': { name: 'Cubic meters per hour (m³/h)', toBase: 1 / 3600 },
+          'mgd': { name: 'Million Gallons/Day (US MGD)', toBase: 0.043812636 }
+        },
+        defaultFrom: 'm3/s',
+        defaultTo: 'cfs',
+        defaultVal: 5
+      },
+      permeability: {
+        base: 'm/s',
+        name: 'Hydraulic Permeability',
+        units: {
+          'm/s': { name: 'Meters per second (m/s)', toBase: 1 },
+          'cm/s': { name: 'Centimeters per second (cm/s)', toBase: 0.01 },
+          'mm/s': { name: 'Millimeters per second (mm/s)', toBase: 0.001 },
+          'ft/day': { name: 'Feet per day (ft/day)', toBase: 0.0000035277778 },
+          'ft/s': { name: 'Feet per second (ft/s)', toBase: 0.3048 },
+          'in/hr': { name: 'Inches per hour (in/hr)', toBase: 0.0000070555556 }
+        },
+        defaultFrom: 'cm/s',
+        defaultTo: 'ft/day',
+        defaultVal: 0.01
+      },
+      length: {
+        base: 'm',
+        name: 'Length & Deflection',
+        units: {
+          'm': { name: 'Meters (m)', toBase: 1 },
+          'mm': { name: 'Millimeters (mm)', toBase: 0.001 },
+          'cm': { name: 'Centimeters (cm)', toBase: 0.01 },
+          'km': { name: 'Kilometers (km)', toBase: 1000 },
+          'in': { name: 'Inches (in)', toBase: 0.0254 },
+          'ft': { name: 'Feet (ft)', toBase: 0.3048 },
+          'yd': { name: 'Yards (yd)', toBase: 0.9144 },
+          'mi': { name: 'Miles (mi)', toBase: 1609.344 }
+        },
+        defaultFrom: 'm',
+        defaultTo: 'ft',
+        defaultVal: 10
+      },
+      area: {
+        base: 'm2',
+        name: 'Area & Section',
+        units: {
+          'm2': { name: 'Square meters (m²)', toBase: 1 },
+          'mm2': { name: 'Square millimeters (mm²)', toBase: 1e-6 },
+          'cm2': { name: 'Square centimeters (cm²)', toBase: 1e-4 },
+          'ft2': { name: 'Square feet (ft²)', toBase: 0.09290304 },
+          'in2': { name: 'Square inches (in²)', toBase: 0.00064516 },
+          'yd2': { name: 'Square yards (yd²)', toBase: 0.83612736 },
+          'acre': { name: 'Acres (ac)', toBase: 4046.8564224 },
+          'hectare': { name: 'Hectares (ha)', toBase: 10000 }
+        },
+        defaultFrom: 'm2',
+        defaultTo: 'ft2',
+        defaultVal: 100
+      },
+      volume: {
+        base: 'm3',
+        name: 'Volume & Concrete Batching',
+        units: {
+          'm3': { name: 'Cubic meters (m³)', toBase: 1 },
+          'yd3': { name: 'Cubic yards (yd³ / CY)', toBase: 0.764554857984 },
+          'ft3': { name: 'Cubic feet (ft³ / CF)', toBase: 0.028316846592 },
+          'liter': { name: 'Liters (L)', toBase: 0.001 },
+          'gal_us': { name: 'Gallons (US liquid)', toBase: 0.003785411784 },
+          'gal_uk': { name: 'Gallons (UK Imperial)', toBase: 0.00454609 }
+        },
+        defaultFrom: 'm3',
+        defaultTo: 'yd3',
+        defaultVal: 10
+      }
+    };
+
+    let currentCategory = 'stress';
+
+    // DOM Elements
+    const fromUnitSelect = document.getElementById('fromUnit');
+    const toUnitSelect = document.getElementById('toUnit');
+    const sourceValueInput = document.getElementById('sourceValue');
+    const resultDisplay = document.getElementById('resultDisplay');
+    const formulaText = document.getElementById('formulaText');
+    const precisionSelect = document.getElementById('precisionSelect');
+    const swapBtn = document.getElementById('swapBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const toast = document.getElementById('toast');
+    const categoryTabsContainer = document.getElementById('categoryTabs');
+
+    // Populate Select Menus
+    function populateUnitSelectors(catKey, selectedFrom, selectedTo) {
+      const cat = unitDatabase[catKey];
+      fromUnitSelect.innerHTML = '';
+      toUnitSelect.innerHTML = '';
+
+      for (const [key, data] of Object.entries(cat.units)) {
+        const optFrom = document.createElement('option');
+        optFrom.value = key;
+        optFrom.textContent = data.name;
+        fromUnitSelect.appendChild(optFrom);
+
+        const optTo = document.createElement('option');
+        optTo.value = key;
+        optTo.textContent = data.name;
+        toUnitSelect.appendChild(optTo);
+      }
+
+      fromUnitSelect.value = selectedFrom || cat.defaultFrom;
+      toUnitSelect.value = selectedTo || cat.defaultTo;
+    }
+
+    // Format number cleanly
+    function formatOutput(num, precisionMode) {
+      if (isNaN(num)) return '0.00';
+      if (!isFinite(num)) return 'Infinity';
+
+      if (precisionMode === 'sci') {
+        return num.toExponential(4);
+      }
+
+      const p = parseInt(precisionMode, 10) || 4;
+      
+      // Check if number is very small non-zero
+      if (Math.abs(num) > 0 && Math.abs(num) < Math.pow(10, -p)) {
+        return num.toExponential(4);
+      }
+
+      // Locale string with commas for thousands
+      const parts = num.toFixed(p).split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return parts.join('.');
+    }
+
+    // Perform Conversion
+    function computeConversion() {
+      const cat = unitDatabase[currentCategory];
+      const fromKey = fromUnitSelect.value;
+      const toKey = toUnitSelect.value;
+      const rawVal = parseFloat(sourceValueInput.value);
+
+      if (isNaN(rawVal)) {
+        resultDisplay.textContent = '---';
+        formulaText.textContent = 'Enter a valid numeric value';
+        return;
+      }
+
+      const fromUnitData = cat.units[fromKey];
+      const toUnitData = cat.units[toKey];
+
+      // Convert to base, then to target
+      const valInBase = rawVal * fromUnitData.toBase;
+      const finalResult = valInBase / toUnitData.toBase;
+
+      const precision = precisionSelect.value;
+      resultDisplay.textContent = formatOutput(finalResult, precision);
+
+      // Compute single unit equivalence for formula display
+      const singleConversion = (1 * fromUnitData.toBase) / toUnitData.toBase;
+      const singleFormatted = formatOutput(singleConversion, '4');
+      formulaText.innerHTML = `1 ${fromKey} = <strong>${singleFormatted}</strong> ${toKey}`;
+    }
+
+    // Event Handlers
+    function switchCategory(catKey, customVal, customFrom, customTo) {
+      currentCategory = catKey;
+
+      // Update active tab button
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        if (btn.getAttribute('data-category') === catKey) {
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+        } else {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-selected', 'false');
+        }
+      });
+
+      const cat = unitDatabase[catKey];
+      if (customVal !== undefined) {
+        sourceValueInput.value = customVal;
+      } else {
+        sourceValueInput.value = cat.defaultVal;
+      }
+
+      populateUnitSelectors(catKey, customFrom, customTo);
+      computeConversion();
+    }
+
+    // Tab Button clicks
+    categoryTabsContainer.addEventListener('click', (e) => {
+      const tabBtn = e.target.closest('.tab-btn');
+      if (!tabBtn) return;
+      const catKey = tabBtn.getAttribute('data-category');
+      switchCategory(catKey);
+    });
+
+    // Inputs change
+    sourceValueInput.addEventListener('input', computeConversion);
+    fromUnitSelect.addEventListener('change', computeConversion);
+    toUnitSelect.addEventListener('change', computeConversion);
+    precisionSelect.addEventListener('change', computeConversion);
+
+    // Swap Button
+    swapBtn.addEventListener('click', () => {
+      const tempUnit = fromUnitSelect.value;
+      fromUnitSelect.value = toUnitSelect.value;
+      toUnitSelect.value = tempUnit;
+
+      // Also set the source value to the current converted result if valid
+      const currentRes = parseFloat(resultDisplay.textContent.replace(/,/g, ''));
+      if (!isNaN(currentRes) && isFinite(currentRes)) {
+        sourceValueInput.value = parseFloat(currentRes.toFixed(6));
+      }
+
+      computeConversion();
+    });
+
+    // Copy to clipboard
+    function showToast() {
+      toast.style.display = 'flex';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 2500);
+    }
+
+    function copyResult() {
+      const textToCopy = resultDisplay.textContent.trim();
+      if (!textToCopy || textToCopy === '---') return;
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        showToast();
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    }
+
+    copyBtn.addEventListener('click', copyResult);
+    resultDisplay.addEventListener('click', copyResult);
+
+    // Preset Chips
+    document.querySelectorAll('.preset-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const cat = chip.getAttribute('data-cat');
+        const from = chip.getAttribute('data-from');
+        const to = chip.getAttribute('data-to');
+        const val = parseFloat(chip.getAttribute('data-val'));
+        switchCategory(cat, val, from, to);
+      });
+    });
+
+    // FAQ Accordion functionality
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        item.classList.toggle('open');
+      });
+    });
+
+    // Initial setup on page load
+    populateUnitSelectors('stress', 'MPa', 'psi');
+    computeConversion();
+  </script>
+</body>
+</html>
